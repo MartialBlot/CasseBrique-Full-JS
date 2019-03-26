@@ -37,7 +37,7 @@
             let score = 0;
             
             let lives = 3;
-            
+
             let bricks = [];
             for(let c=0; c<brickColumnCount; c++) {
                 bricks[c] = [];
@@ -110,12 +110,6 @@
                 ctx.fillText("Score: "+score, 8, 20);
             }
             
-            function drawLives() {
-                ctx.font = "16px Arial";
-                ctx.fillStyle = "#0095DD";
-                ctx.fillText("Lives: "+lives, canvas.width-65, 20);
-            }
-            
             function drawBall() {
                 ctx.beginPath();
                 ctx.arc(x, y, ballRadius, 0, Math.PI*2);
@@ -138,7 +132,6 @@
                 drawBricks();
                 drawPaddle();
                 drawScore();
-                drawLives();
                 collisionDetection();
                 
                 if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) {
@@ -152,41 +145,32 @@
                         dy = -dy;
                     }
                     else {
-                        lives--;
-                        if(!lives) {
-                            alert("GAME OVER");
-                            document.location.reload();
-                        }
-                        else {
-                            x = canvas.width/2;
-                            y = canvas.height-30;
-                            dx = 3;
-                            dy = -3;
-                            paddleX = (canvas.width-paddleWidth)/2;
-                        }
+                        alert("GAME OVER");
+                        document.location.reload();
+                        clearInterval(interval); // Needed for Chrome to end game
                     }
                 }
-                    
-                    if(rightPressed && paddleX < canvas.width-paddleWidth) {
-                        paddleX += 7;
-                    }
-                    else if(leftPressed && paddleX > 0) {
-                        paddleX -= 7;
-                    }
-                    
-                    x += dx;
-                    y += dy;
+                
+                if(rightPressed && paddleX < canvas.width-paddleWidth) {
+                    paddleX += 7;
+                }
+                else if(leftPressed && paddleX > 0) {
+                    paddleX -= 7;
                 }
                 
-                let interval = setInterval(draw, 10);
-                
-                //balle
-                // ctx.beginPath();
-                // ctx.arc(50, 50, 10, 0, Math.PI*2);
-                // ctx.fillStyle = "#0095DD";
-                // ctx.fill();
-                // ctx.closePath();
-            </script>
+                x += dx;
+                y += dy;
+            }
             
-        </body>
-        </html>
+            let interval = setInterval(draw, 10);
+            
+            //balle
+            // ctx.beginPath();
+            // ctx.arc(50, 50, 10, 0, Math.PI*2);
+            // ctx.fillStyle = "#0095DD";
+            // ctx.fill();
+            // ctx.closePath();
+        </script>
+        
+    </body>
+    </html>
